@@ -10,7 +10,7 @@ class ProductOverviewScreen extends StatelessWidget {
       description: 'A red shirt - it is pretty red!',
       price: 29.99,
       imageUrl:
-          'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbekQCXiuZlve-prs3twqcykJYcwzfsFbudA&usqp=CAU',
     ),
     Product(
       id: 'p2',
@@ -18,7 +18,7 @@ class ProductOverviewScreen extends StatelessWidget {
       description: 'A nice pair of trousers.',
       price: 59.99,
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Trousers%2C_dress_%28AM_1960.022-8%29.jpg/512px-Trousers%2C_dress_%28AM_1960.022-8%29.jpg',
+          'https://www.cavani.co.uk/images/house-of-cavani-caridi-beige-slim-fit-trousers-p726-25956_zoom.jpg',
     ),
     Product(
       id: 'p3',
@@ -26,7 +26,7 @@ class ProductOverviewScreen extends StatelessWidget {
       description: 'Warm and cozy - exactly what you need for the winter.',
       price: 19.99,
       imageUrl:
-          'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnohxJsNz57ff0Yk3kWs7b9yDoY3Uj3UOA5Q&usqp=CAU',
     ),
     Product(
       id: 'p4',
@@ -34,7 +34,39 @@ class ProductOverviewScreen extends StatelessWidget {
       description: 'Prepare any meal you want.',
       price: 49.99,
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVH931ZlGNHOQgiuKkpB6-G-IBKg0mq5jdBw&usqp=CAU',
+    ),
+    Product(
+      id: 'p1',
+      title: 'Red Shirt',
+      description: 'A red shirt - it is pretty red!',
+      price: 29.99,
+      imageUrl:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbekQCXiuZlve-prs3twqcykJYcwzfsFbudA&usqp=CAU',
+    ),
+    Product(
+      id: 'p2',
+      title: 'Trousers',
+      description: 'A nice pair of trousers.',
+      price: 59.99,
+      imageUrl:
+          'https://www.cavani.co.uk/images/house-of-cavani-caridi-beige-slim-fit-trousers-p726-25956_zoom.jpg',
+    ),
+    Product(
+      id: 'p3',
+      title: 'Yellow Scarf',
+      description: 'Warm and cozy - exactly what you need for the winter.',
+      price: 19.99,
+      imageUrl:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnohxJsNz57ff0Yk3kWs7b9yDoY3Uj3UOA5Q&usqp=CAU',
+    ),
+    Product(
+      id: 'p4',
+      title: 'A Pan',
+      description: 'Prepare any meal you want.',
+      price: 49.99,
+      imageUrl:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVH931ZlGNHOQgiuKkpB6-G-IBKg0mq5jdBw&usqp=CAU',
     ),
   ];
 
@@ -44,19 +76,33 @@ class ProductOverviewScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text('MyShop'),
         ),
-        body: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 3 / 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          ),
-          itemCount: loadedProducts.length,
-          itemBuilder: ((context, index) => ProductItem(
-                loadedProducts[index].id,
-                loadedProducts[index].title,
-                loadedProducts[index].imageUrl,
-              )),
-        ));
+        body: ProductsGrid(loadedProducts: loadedProducts));
+  }
+}
+
+class ProductsGrid extends StatelessWidget {
+  const ProductsGrid({
+    super.key,
+    required this.loadedProducts,
+  });
+
+  final List<Product> loadedProducts;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 3 / 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+      ),
+      itemCount: loadedProducts.length,
+      itemBuilder: ((context, index) => ProductItem(
+            loadedProducts[index].id,
+            loadedProducts[index].title,
+            loadedProducts[index].imageUrl,
+          )),
+    );
   }
 }
