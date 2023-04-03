@@ -70,16 +70,20 @@ class Products with ChangeNotifier {
     ),
   ];
   var _showFavoritesOnly = false;
-  
-  void showFavoritesOnly() {
-    _showFavoritesOnly = true;
-    notifyListeners();
+
+  List<Product> get favoriteItem {
+    return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
 
-  void showAll() {
-    _showFavoritesOnly = false;
-    notifyListeners();
-  }
+  // void showFavoritesOnly() {
+  //   _showFavoritesOnly = true;
+  //   notifyListeners();
+  // }
+
+  // void showAll() {
+  //   _showFavoritesOnly = false;
+  //   notifyListeners();
+  // }
 
   List<Product> get items {
     if (_showFavoritesOnly) {
