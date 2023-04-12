@@ -37,11 +37,21 @@ class _EditProductScrenState extends State<EditProductScren> {
 
   void _updateImageUrl() {
     if (!_imageFocusNode.hasFocus) {
+      if (_imageUrlController.text.isEmpty ||
+          (!_imageUrlController.text.startsWith('http') &&
+              !_imageUrlController.text.startsWith('https')) ||
+          (!_imageUrlController.text.endsWith('.png') &&
+              !_imageUrlController.text.endsWith('.jpg') &&
+              !_imageUrlController.text.endsWith('.jpeg'))) return;
       setState(() {});
     }
   }
 
   void _saveForm() {
+    final isValid = _form.currentState?.validate();
+    if (isValid!) {
+      return;
+    }
     _form.currentState?.save();
     print(_editedProduct.title);
     print(_editedProduct.description);
@@ -68,6 +78,12 @@ class _EditProductScrenState extends State<EditProductScren> {
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).requestFocus(_priceFocusNode);
                   },
+                  validator: (isValue) {
+                    if (isValue!.isEmpty) {
+                      return 'Please provider a value.';
+                    } else
+                      return null;
+                  },
                   onSaved: (value) {
                     _editedProduct = Product(
                         id: _editedProduct.id,
@@ -82,6 +98,18 @@ class _EditProductScrenState extends State<EditProductScren> {
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.number,
                   focusNode: _priceFocusNode,
+                  validator: (isValue) {
+                    if (isValue!.isEmpty) {
+                      return 'Please enter a price.';
+                    }
+                    if (double.tryParse(isValue) == null) {
+                      return 'Please enter a valid number.';
+                    }
+                    if (double.parse(isValue) <= 0) {
+                      return 'Please enter a number greater than zero.';
+                    }
+                    return null;
+                  },
                   onSaved: (value) {
                     _editedProduct = Product(
                         id: _editedProduct.id,
@@ -93,9 +121,18 @@ class _EditProductScrenState extends State<EditProductScren> {
                 ),
                 TextFormField(
                     decoration: InputDecoration(labelText: 'Description'),
-                    maxLength: 3,
+                    maxLength: 25,
                     keyboardType: TextInputType.multiline,
                     focusNode: _descriptionFocusNode,
+                    validator: (isValue) {
+                      if (isValue!.isEmpty) {
+                        return 'Please enter e destription';
+                      }
+                      if (isValue.length <= 10) {
+                        return 'Should be at least 10 characters long. ';
+                      }
+                      return null;
+                    },
                     onSaved: (value) {
                       _editedProduct = Product(
                           id: _editedProduct.id,
@@ -134,6 +171,9 @@ class _EditProductScrenState extends State<EditProductScren> {
                         textInputAction: TextInputAction.done,
                         controller: _imageUrlController,
                         focusNode: _imageFocusNode,
+                        validator: (isValue) {
+                          return null;
+                        },
                         onFieldSubmitted: (_) {
                           _saveForm();
                         },
