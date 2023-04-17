@@ -66,7 +66,6 @@ class _EditProductScrenState extends State<EditProductScren> {
         _imageUrlController.text = _editedProduct.imageUrl;
       }
     }
-    _isInit = false;
     super.didChangeDependencies();
   }
 
