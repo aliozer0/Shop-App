@@ -104,8 +104,8 @@ class Products with ChangeNotifier {
       description: product.description,
       imageUrl: product.imageUrl,
     );
-    // _items.add(newProduct);
-    _items.insert(0, newProduct); //  at the start of list.
+    _items.add(newProduct);
+    // _items.insert(0, newProduct); //  at the start of list.
 
     notifyListeners();
   }

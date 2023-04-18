@@ -87,32 +87,37 @@ class _EditProductScrenState extends State<EditProductScren> {
 
   void _updateImageUrl() {
     if (!_imageFocusNode.hasFocus) {
-      if (!_imageUrlController.text.isEmpty ||
-          (!_imageUrlController.text.startsWith('http') &&
+      if ((!_imageUrlController.text.startsWith('http') &&
               !_imageUrlController.text.startsWith('https')) ||
-          (!_imageUrlController.text.endsWith('png') &&
-              !_imageUrlController.text.endsWith('jpg') &&
-              !_imageUrlController.text.endsWith('jpeg'))) {
+          (!_imageUrlController.text.endsWith('.png') &&
+              !_imageUrlController.text.endsWith('.jpg') &&
+              !_imageUrlController.text.endsWith('.jpeg'))) {
         return;
       }
-
       setState(() {});
     }
   }
 
   void _saveForm() {
     final isValid = _form.currentState?.validate();
-    if (isValid!) {
+    if (!isValid!) {
       return;
     }
     _form.currentState?.save();
-    if (_editedProduct.id != null) {
+
+    //not to add new product if edited the old
+    if (_editedProduct.id.isNotEmpty) {
       Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
-    } else {
+    }
+    if (_editedProduct.id.isEmpty) {
+      //add newly added item
       Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
     }
-
+    // print(_editedProduct.id);
+    // print(_editedProduct.imageUrl);
+    // print(_editedProduct.price);
+    print(_editedProduct.id.isEmpty);
     Navigator.of(context).pop();
   }
 
@@ -241,11 +246,22 @@ class _EditProductScrenState extends State<EditProductScren> {
                         controller: _imageUrlController,
                         focusNode: _imageFocusNode,
                         validator: (isValue) {
+                          if (isValue!.isEmpty) {
+                            return 'Plesae enter an image URL';
+                          }
+                          if (!isValue.startsWith('http') ||
+                              !isValue.startsWith('https')) {
+                            return 'Please enter a valid URl';
+                          }
+                          if (!isValue.endsWith('png') &&
+                              !isValue.endsWith('jpg') &&
+                              !isValue.endsWith('jpeg') &&
+                              !isValue.endsWith('heic')) {
+                            return '.jpg, jpeg, .png, .heic format is supprted only';
+                          }
                           return null;
                         },
-                        onFieldSubmitted: (_) {
-                          _saveForm();
-                        },
+                        onFieldSubmitted: (_) => _saveForm(),
                         onSaved: (value) {
                           _editedProduct = Product(
                               id: _editedProduct.id,
@@ -254,6 +270,9 @@ class _EditProductScrenState extends State<EditProductScren> {
                               description: _editedProduct.description,
                               imageUrl: value.toString(),
                               price: _editedProduct.price);
+                        },
+                        onEditingComplete: () {
+                          setState(() {});
                         },
                       ),
                     ),
