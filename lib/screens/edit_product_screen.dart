@@ -128,7 +128,7 @@ class _EditProductScrenState extends State<EditProductScren> {
           context: context,
           builder: (ctx) => AlertDialog(
             title: Text('An error occurred!'),
-            content: Text('Someting went wrong'),
+            content: Text('Someting went wrng'),
             actions: [
               TextButton(
                 onPressed: () {
