@@ -6,38 +6,38 @@ import 'package:http/http.dart' as http;
 
 class Products with ChangeNotifier {
   List<Product> _items = [
-    Product(
-      id: 'p1',
-      title: 'Red Shirt',
-      description: 'A red shirt - it is pretty red!',
-      price: 29.99,
-      imageUrl:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbekQCXiuZlve-prs3twqcykJYcwzfsFbudA&usqp=CAU',
-    ),
-    Product(
-      id: 'p2',
-      title: 'Trousers',
-      description: 'A nice pair of trousers.',
-      price: 59.99,
-      imageUrl:
-          'https://www.cavani.co.uk/images/house-of-cavani-caridi-beige-slim-fit-trousers-p726-25956_zoom.jpg',
-    ),
-    Product(
-      id: 'p3',
-      title: 'Yellow Scarf',
-      description: 'Warm and cozy - exactly what you need for the winter.',
-      price: 19.99,
-      imageUrl:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnohxJsNz57ff0Yk3kWs7b9yDoY3Uj3UOA5Q&usqp=CAU',
-    ),
-    Product(
-      id: 'p4',
-      title: 'A Pan',
-      description: 'Prepare any meal you wants.',
-      price: 49.99,
-      imageUrl:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVH931ZlGNHOQgiuKkpB6-G-IBKg0mq5jdBw&usqp=CAU',
-    ),
+    // Product(
+    //   id: 'p1',
+    //   title: 'Red Shirt',
+    //   description: 'A red shirt - it is pretty red!',
+    //   price: 29.99,
+    //   imageUrl:
+    //       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbekQCXiuZlve-prs3twqcykJYcwzfsFbudA&usqp=CAU',
+    // ),
+    // Product(
+    //   id: 'p2',
+    //   title: 'Trousers',
+    //   description: 'A nice pair of trousers.',
+    //   price: 59.99,
+    //   imageUrl:
+    //       'https://www.cavani.co.uk/images/house-of-cavani-caridi-beige-slim-fit-trousers-p726-25956_zoom.jpg',
+    // ),
+    // Product(
+    //   id: 'p3',
+    //   title: 'Yellow Scarf',
+    //   description: 'Warm and cozy - exactly what you need for the winter.',
+    //   price: 19.99,
+    //   imageUrl:
+    //       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnohxJsNz57ff0Yk3kWs7b9yDoY3Uj3UOA5Q&usqp=CAU',
+    // ),
+    // Product(
+    //   id: 'p4',
+    //   title: 'A Pan',
+    //   description: 'Prepare any meal you wants.',
+    //   price: 49.99,
+    //   imageUrl:
+    //       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVH931ZlGNHOQgiuKkpB6-G-IBKg0mq5jdBw&usqp=CAU',
+    // ),
   ];
   var _showFavoritesOnly = false;
 
@@ -64,6 +64,33 @@ class Products with ChangeNotifier {
 
   Product findbyId(String id) {
     return _items.firstWhere((prod) => prod.id == id);
+  }
+
+  Future<void> fetchAndSetProducts() async {
+    const url =
+        'https://shopapp-b4f6d-default-rtdb.firebaseio.com/products.json'
+            as String;
+    try {
+      final response = await http.get(url as Uri);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List loadedProducts = [];
+      extractedData.forEach(
+        (prodId, prodData) {
+          loadedProducts.add(Product(
+              id: prodId,
+              title: prodData['title'],
+              description: prodData['description'],
+              imageUrl: prodData['imageData'],
+              price: prodData['price'],
+              isFavorite: prodData['isFavorite']));
+        },
+        
+      );
+      _items = loadedProducts;
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
   }
 
   Future<void> addProduct(Product product) async {
