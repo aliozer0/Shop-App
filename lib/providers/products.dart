@@ -36,7 +36,7 @@ class Products with ChangeNotifier {
     //   description: 'Prepare any meal you wants.',
     //   price: 49.99,
     //   imageUrl:
-    //       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVH931ZlGNHOQgiuKkpB6-G-IBKg0mq5jdBw&usqp=CAU',
+    //       'https://encrypted-tbn0da.gstatic.com/images?q=tbn:ANd9GcTVH931ZlGNHOQgiuKkpB6-G-IBKg0mq5jdBw&usqp=CAU',
     // ),
   ];
   var _showFavoritesOnly = false;
