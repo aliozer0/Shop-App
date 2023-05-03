@@ -58,7 +58,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
                   child: Text('Only Favorite '),
                   value: FilterOptions.Favorites),
               PopupMenuItem(
-                child: Text('Show All'),
+                child: Text('Show Alls'),
                 value: FilterOptions.All,
               ),
             ],
