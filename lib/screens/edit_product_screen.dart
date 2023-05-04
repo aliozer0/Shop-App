@@ -57,7 +57,7 @@ class _EditProductScrenState extends State<EditProductScren> {
       if (ModalRoute.of(context)!.settings.arguments != null) {
         final productId = ModalRoute.of(context)!.settings.arguments as String;
         _editedProduct =
-            Provider.of<Products>(context, listen: false).findbyId(productId);
+            Provider.of<Products>(context, listen: false).findById(productId);
         _initValues = {
           'title': _editedProduct.title,
           'descirption': _editedProduct.description,
@@ -100,9 +100,9 @@ class _EditProductScrenState extends State<EditProductScren> {
   }
 
   Future<void> _saveForm() async {
-    final isValid = _form.currentState?.validate();
+    final isValid = _form.currentState!.validate();
 
-    if (!isValid!) {
+    if (!isValid) {
       return;
     }
     _form.currentState?.save();
@@ -110,7 +110,7 @@ class _EditProductScrenState extends State<EditProductScren> {
       _isLoading = true;
     });
     //not to add new product if edited the old
-    if (_editedProduct.id != null) {
+    if (_editedProduct.id != '') {
       await Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
     } else {
@@ -119,7 +119,7 @@ class _EditProductScrenState extends State<EditProductScren> {
         await Provider.of<Products>(context, listen: false)
             .addProduct(_editedProduct);
       } catch (error) {
-        await showDialog(
+        await showDialog<Null>(
           context: context,
           builder: (ctx) => AlertDialog(
             title: Text('An error occurred!'),
@@ -135,13 +135,11 @@ class _EditProductScrenState extends State<EditProductScren> {
           ),
         );
       }
-      setState(() {
-        _isLoading = false;
-      });
-      Navigator.of(context).pop();
-
-      print(_editedProduct.id.isEmpty);
     }
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.of(context).pop();
   }
 
   @override
