@@ -110,15 +110,10 @@ class _EditProductScrenState extends State<EditProductScren> {
       _isLoading = true;
     });
     //not to add new product if edited the old
-    if (_editedProduct.id.isNotEmpty) {
-      Provider.of<Products>(context, listen: false)
+    if (_editedProduct.id != null) {
+      await Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
-      setState(() {
-        _isLoading = false;
-      });
-      Navigator.of(context).pop();
-    }
-    if (_editedProduct.id.isEmpty) {
+    } else {
       //add newly added item
       try {
         await Provider.of<Products>(context, listen: false)
@@ -139,18 +134,14 @@ class _EditProductScrenState extends State<EditProductScren> {
             ],
           ),
         );
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
-        Navigator.of(context).pop();
       }
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.of(context).pop();
+
+      print(_editedProduct.id.isEmpty);
     }
-    // print(_editedProduct.id);
-    // print(_editedProduct.imageUrl);
-    // print(_editedProduct.price);
-    print(_editedProduct.id.isEmpty);
-    // Navigator.of(context).pop();
   }
 
   @override
