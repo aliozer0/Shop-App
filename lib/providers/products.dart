@@ -66,9 +66,10 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
+
   Future<void> fetchAndSetProducts() async {
     try {
-      final url = Uri.parse(
+      var url = Uri.parse(
           'https://shopapp-b4f6d-default-rtdb.firebaseio.com/products.json'
               as String);
 
@@ -95,6 +96,46 @@ class Products with ChangeNotifier {
     }
   }
 
+/*
+
+  Future<void> fetchAndSetProducts() async {
+    var url = Uri.https(
+      'https://shopapp-b4f6d-default-rtdb.firebaseio.com/products.json',
+    );
+
+    try {
+      final response = await http.get(url);
+
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      url = Uri.parse(
+        'https://shopapp-b4f6d-default-rtdb.firebaseio.com/products.json',
+      );
+      final favoriteResponse = await http.get(url);
+      final favoriteData = json.decode(favoriteResponse.body);
+
+      final List<Product> loadedProducts = [];
+      extractedData.forEach((prodId, prodData) {
+        loadedProducts.insert(
+            0,
+            Product(
+              id: prodId,
+              title: prodData['title'],
+              price: prodData['price'].toDouble(),
+              description: prodData['description'],
+              imageUrl: prodData['imageUrl'],
+              isFavorite:
+                  favoriteData == null ? false : favoriteData[prodId] ?? false,
+            ));
+      });
+
+      _items = loadedProducts;
+      notifyListeners();
+    } catch (error) {
+      throw error;
+    }
+  }
+*/
   Future<void> addProduct(Product product) async {
     final url = Uri.parse(
         'https://shopapp-b4f6d-default-rtdb.firebaseio.com/products.json');
