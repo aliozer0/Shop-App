@@ -13,36 +13,36 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-  var _isLoaing = false;
-  @override
-  void initState() {
-    Future.delayed(Duration.zero).then((_) async {
-      setState(() {
-        _isLoaing = true;
-      });
-      await Provider.of<Orders>(context, listen: false).fetchAndSetOrders();
-      setState(() {
-        _isLoaing = false;
-      });
-    });
-    super.initState();
-  }
-
+  
   @override
   Widget build(BuildContext context) {
-    final ordersData = Provider.of<Orders>(context);
+    print('builder Orders');
+    // final ordersData = Provider.of<Orders>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Orders'),
       ),
       drawer: AppDrawer(),
-      body: _isLoaing
-          ? Center(
+      body: FutureBuilder(
+        future: Provider.of<Orders>(context, listen: false).fetchAndSetOrders(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
               child: CircularProgressIndicator(),
-            )
-          : ListView.builder(
-              itemCount: ordersData.orders.length,
-              itemBuilder: (ctx, i) => OrdersItem(ordersData.orders[i])),
+            );
+          } else {
+            if (snapshot.error != null) {
+              return Center(
+                child: Text(' An Error occurred! '),
+              );
+            }
+            return Consumer<Orders>(
+                builder: (ctx, ordersData, child) => ListView.builder(
+                    itemCount: ordersData.orders.length,
+                    itemBuilder: (ctx, i) => OrdersItem(ordersData.orders[i])));
+          }
+        },
+      ),
     );
   }
 }
