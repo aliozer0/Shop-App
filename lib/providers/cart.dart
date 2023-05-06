@@ -10,7 +10,7 @@ class CartItem {
       {required this.id,
       required this.title,
       required this.quantity,
-      required this.price});
+      required this.price, required DateTime dateTime});
 }
 
 class Cart with ChangeNotifier {
