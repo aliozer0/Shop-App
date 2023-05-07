@@ -51,8 +51,6 @@ class Products with ChangeNotifier {
   List<Product> get favoriteItems {
     return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
-  
-  
 
   Product findById(String id) {
     return _items.firstWhere((prod) => prod.id == id);
@@ -68,12 +66,10 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-
- Future<void> fetchAndSetProducts() async {
+  Future<void> fetchAndSetProducts() async {
     try {
-      var url = Uri.parse(
-          'https://shopapp-b4f6d-default-rtdb.firebaseio.com/products.json'
-              as String);
+      var url = Uri.https('https://shopapp-b4f6d-default-rtdb.firebaseio.com',
+          '/products.json');
 
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -83,7 +79,7 @@ class Products with ChangeNotifier {
       }
       extractedData.forEach((prodId, prodData) {
         loadedProducts.add(Product(
-            id: prodId,
+          id: prodId,
           title: prodData['title'].toString(),
           description: prodData['description']?.toString() ?? '',
           price: double.parse(prodData['price'].toString()),
