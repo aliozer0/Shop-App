@@ -29,7 +29,7 @@ class Product with ChangeNotifier {
     isFavorite = !isFavorite;
     notifyListeners();
     final url =
-        'https://shopapp-b4f6d-default-rtdb.firebaseio.com/products/$id.json';
+        'https://shoop-bdcc1-default-rtdb.europe-west1.firebasedatabase.app/products/$id.json';
     try {
       final response = await http.patch(url as Uri,
           body: json.encode({'isFavorite': isFavorite}));

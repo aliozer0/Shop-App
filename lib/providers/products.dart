@@ -68,7 +68,7 @@ class Products with ChangeNotifier {
 
   Future<void> fetchAndSetProducts() async {
     try {
-      var url = Uri.https('https://shopapp-b4f6d-default-rtdb.firebaseio.com',
+      var url = Uri.https('https://shoop-bdcc1-default-rtdb.europe-west1.firebasedatabase.app',
           '/products.json');
 
       final response = await http.get(url);
@@ -133,10 +133,12 @@ class Products with ChangeNotifier {
       throw error;
     }
   }
+    final url = Uri.parse(
+        'https://shopapp-b4f6d-default-rtdb.firebaseio.com/products.json');
 */
   Future<void> addProduct(Product product) async {
     final url = Uri.parse(
-        'https://shopapp-b4f6d-default-rtdb.firebaseio.com/products.json');
+        'https://shoop-bdcc1-default-rtdb.europe-west1.firebasedatabase.app/products.json');
     try {
       final response = await http.post(
         url,
@@ -168,7 +170,7 @@ class Products with ChangeNotifier {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
       final url = Uri.https(
-          'https://shopapp-b4f6d-default-rtdb.firebaseio.com/products/$id.json');
+          'https://shoop-bdcc1-default-rtdb.europe-west1.firebasedatabase.app/products/$id.json');
       await http.patch(url,
           body: json.encode({
             'title': newProduct.title,
@@ -185,7 +187,7 @@ class Products with ChangeNotifier {
 
   Future<void> deleteProduct(String id) async {
     final url = Uri.https(
-        'https://shopapp-b4f6d-default-rtdb.firebaseio.com/products/$id.json');
+        'https://shoop-bdcc1-default-rtdb.europe-west1.firebasedatabase.app/products/$id.json');
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     Product? existingProduct = _items[existingProductIndex];
     _items.removeAt(existingProductIndex);

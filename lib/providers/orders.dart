@@ -24,7 +24,7 @@ class Orders with ChangeNotifier {
 
   Future<void> fetchAndSetOrders() async {
     final url = Uri.parse(
-        'https://shopapp-b4f6d-default-rtdb.firebaseio.com/orders.json');
+        'https://shoop-bdcc1-default-rtdb.europe-west1.firebasedatabase.app/orders.json');
     final response = await http.get(url);
     final List<OrderItem> loadedOrders = [];
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -54,7 +54,7 @@ class Orders with ChangeNotifier {
 
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
     final url = Uri.parse(
-        'https://shopapp-b4f6d-default-rtdb.firebaseio.com/orders.json');
+        'https://shoop-bdcc1-default-rtdb.europe-west1.firebasedatabase.app/orders.json');
     final response = await http.post(url,
         body: json.encode({
           'amount': total,
