@@ -38,6 +38,54 @@ class Products with ChangeNotifier {
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
+    Product(
+      id: 'p4',
+      title: 'T-shirt',
+      description: 'Prepare any meal you want.',
+      price: 49.99,
+      imageUrl:
+          'https://cdn.pixabay.com/photo/2012/04/24/11/18/fashion-39388_960_720.png',
+    ),
+    Product(
+      id: 'p4',
+      title: 'Jacket',
+      description: 'Prepare any meal you want.',
+      price: 49.99,
+      imageUrl:
+          'https://cdn.pixabay.com/photo/2021/12/24/20/17/fashion-6891713_960_720.png',
+    ),
+    Product(
+      id: 'p4',
+      title: 'white Shirt',
+      description: 'Prepare any meal you want.',
+      price: 49.99,
+      imageUrl:
+          'https://cdn.pixabay.com/photo/2021/11/01/05/57/shirt-6759468_960_720.png',
+    ),
+    Product(
+      id: 'p4',
+      title: 'Ring',
+      description: 'Prepare any meal you want.',
+      price: 49.99,
+      imageUrl:
+          'https://www.hooyo.com.tr/1/79322-storage_Ins-d%C3%BCzensiz-a%C3%A7%C4%B1k-halka-kore-vintage-basit-ayta%C5%9F%C4%B1/pic.jpg',
+    ),
+    Product(
+      id: 'p4',
+      title: 'Necklace',
+      description: 'Prepare any meal you want.',
+      price: 49.99,
+      imageUrl:
+          'https://png.pngtree.com/png-clipart/20230426/original/pngtree-blue-fashion-jewelry-necklace-pendant-png-image_9103030.png',
+    ),
+    Product(
+      id: 'p4',
+      title: 'Earring',
+      description: 'Prepare any meal you want.',
+      price: 49.99,
+      imageUrl:
+          'https://www.ulusanmotor.com.tr/Rakol-parlak-beyaz-k%C3%BCbik-zirkonya-basit-daire-hoop-thumb/2_uploads-66871.jpeg',
+    ),
   ];
   // var _showFavoritesOnly = false;
 
@@ -68,7 +116,8 @@ class Products with ChangeNotifier {
 
   Future<void> fetchAndSetProducts() async {
     try {
-      var url = Uri.https('https://shoop-bdcc1-default-rtdb.europe-west1.firebasedatabase.app',
+      var url = Uri.https(
+          'https://shoop-bdcc1-default-rtdb.europe-west1.firebasedatabase.app',
           '/products.json');
 
       final response = await http.get(url);
