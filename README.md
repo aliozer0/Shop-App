@@ -1,7 +1,16 @@
 # Shop App
 
-Fully functional shop app written in Flutter.
+A new Flutter project.
 
 ## Getting Started
 
- <img src="/lib/images/Foto1.png" height="400" alt="Screenshot"/>   <img src="/lib/images/Foto2.png" height="400" alt="Screenshot"/>    <img src="/lib/images/Foto3.png" height="400" alt="Screenshot"/>   <img src="/lib/images/Foto4.png" height="400" alt="Screenshot"/>    <img src="/lib/images/Foto5.png" height="400" alt="Screenshot"/>   <img src="/lib/images/Foto6.png" height="400" alt="Screenshot"/>    <img src="/lib/images/Foto7.png" height="400" alt="Screenshot"/>   
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
